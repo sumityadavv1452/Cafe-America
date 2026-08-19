@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* ==========================================
+   CSS CUSTOM PROPERTIES (BRAND TOKENS)
+   ========================================== */
+:root {
+  /* Strict Color System */
+  --primary: #3C2415;
+  --secondary: #FDFAF7; /* Cream / Background */
+  --accent: #C17849;
+  --accent-dark: #A0622D;
+  --text-primary: #2D2926;
+  --text-secondary: #6B5B4E;
+  --border-custom: #E8DDD5;
+  --success-green: #7D8B69;
+  
+  /* Additional Dark Background Token */
+  --background-dark: #1A0F08;
+  --white: #FFFFFF;
+
+  /* Spacing Scale Tokens (8px base) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  --space-32: 8rem;    /* 128px */
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(60, 36, 21, 0.04);
+  --shadow-medium: 0 8px 30px rgba(60, 36, 21, 0.08);
+  --shadow-strong: 0 16px 40px rgba(60, 36, 21, 0.12);
+  --shadow-hover: 0 12px 32px rgba(193, 120, 73, 0.18);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Fluid Typography Clamps */
+  --fs-h1: clamp(2.5rem, 6vw, 4.5rem);
+  --fs-h2: clamp(2rem, 4vw, 3.25rem);
+  --fs-h3: clamp(1.5rem, 3vw, 2.25rem);
+  --fs-h4: clamp(1.25rem, 2vw, 1.6rem);
+  --fs-body: clamp(0.95rem, 1.2vw, 1.05rem);
+}
+
+/* ==========================================
+   TAILWIND V4 THEME CONFIGURATION
+   ========================================== */
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border-custom);
+  --color-success: var(--success-green);
+  --color-background-dark: var(--background-dark);
+
+  --font-serif: "Fraunces", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-accent: "Dancing Script", cursive;
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-medium: var(--shadow-medium);
+  --shadow-strong: var(--shadow-strong);
+  --shadow-hover: var(--shadow-hover);
+}
+
+/* ==========================================
+   MODERN CSS RESET & BASE STYLES
+   ========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--secondary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Heading Typography Reset & Fluid Scale */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--primary);
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+/* Selection highlights */
+::selection {
+  background-color: var(--accent);
+  color: var(--secondary);
+}
+
+/* Focus-visible accessibility styles */
+input:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Custom Scrollbar styling (Webkit) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-custom);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Touch targets optimization */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+/* Ken Burns background zoom effect */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+.ken-burns-bg {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+/* Mouse Scroll indicator bounce */
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+.scroll-indicator-bounce {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* Custom image scale zoom utility */
+.image-zoom-container {
+  overflow: hidden;
+  position: relative;
+}
+.image-zoom-container img {
+  transition: transform var(--transition-slow);
+}
+.image-zoom-container:hover img {
+  transform: scale(1.06);
+}
+
+/* Hide scrollbar classes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ==========================================
+   SECTION 4: WHY CHOOSE US CARDS
+   ========================================== */
+.why-us__card {
+  background-color: var(--white);
+  border: 1px solid var(--border-custom);
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: var(--shadow-soft);
+  border-top: 3px solid transparent;
+  transition: transform var(--transition-bounce), box-shadow var(--transition-bounce), border-top-color var(--transition-bounce);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.why-us__card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-medium);
+  border-top-color: var(--accent);
+}
+
+/* ==========================================
+   SECTION 11: FOOTER LINKS
+   ========================================== */
+.footer-link {
+  color: var(--text-secondary);
+  position: relative;
+  transition: color var(--transition-base), transform var(--transition-base);
+  display: inline-block;
+  text-decoration: none;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--accent);
+  transition: width var(--transition-base);
+}
+
+.footer-link:hover {
+  color: var(--primary);
+  transform: translateX(4px);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* ==========================================
+   SECTION 12: SCROLL ANIMATION ENGINE
+   ========================================== */
+.fade-in-up,
+.fade-in,
+.scale-in,
+.blur-in {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity, filter;
+}
+
+.fade-in-up {
+  transform: translateY(30px);
+}
+
+.scale-in {
+  transform: scale(0.95);
+}
+
+.blur-in {
+  filter: blur(8px);
+}
+
+/* Animated active state triggers */
+.fade-in-up.animated,
+.fade-in.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scale-in.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.blur-in.animated {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* ==========================================
+   HAMBURGER TRIGGER & MOBILE MENU OVERLAY
+   ========================================== */
+.hamburger-box {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transition: transform var(--transition-bounce), opacity var(--transition-fast);
+}
+
+.menu-open .hamburger-line-1 {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-open .hamburger-line-2 {
+  opacity: 0;
+}
+
+.menu-open .hamburger-line-3 {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--background-dark);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.mobile-menu-overlay.menu-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu-link {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--secondary);
+  text-decoration: none;
+  margin: 1rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mobile-menu-overlay.menu-active .mobile-menu-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
